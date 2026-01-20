@@ -1,0 +1,83 @@
+services:
+  php:
+    image: wk-creative/php_yii2:main
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      args:
+        APP_ENV: ${APP_ENV:-local}
+    volumes:
+      - ../assets:/app/assets:delegated
+      - ../commands:/app/commands:delegated
+      - ../config:/app/config:delegated
+      - ../controllers:/app/controllers:delegated
+      - ../mail:/app/mail:delegated
+      - ../migrations:/app/migrations:delegated
+      - ../models:/app/models:delegated
+      - ../views:/app/views:delegated
+      - ../web:/app/web:delegated
+      - php_assets_volume:/app/web/assets
+      - ../widgets:/app/widgets:delegated
+      - ../yii:/app/yii:delegated
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  nginx:
+    image: wk-creative/php_yii2_nginx:main
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ../web:/app/web:ro
+      - php_assets_volume:/app/web/assets:ro
+    depends_on:
+      - php
+
+  mysql:
+    image: mysql:8.4.4
+    restart: unless-stopped
+    command:
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_0900_ai_ci
+    environment:
+      TZ: ${TZ:-Europe/Moscow}
+      MYSQL_DATABASE: php_yii2_creativity
+      MYSQL_USER: basic
+      MYSQL_PASSWORD: basic
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "22160:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "root", "-proot"]
+      interval: 22s
+      timeout: 11s
+      retries: 7
+      start_period: 80s
+    volumes:
+      - db_mysql_volume:/var/lib/mysql
+
+  redis:
+    image: redis:7.4.1-alpine
+    ports:
+      - "22161:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 22s
+      timeout: 11s
+      retries: 7
+      start_period: 42s
+    volumes:
+      - cache_redis_volume:/data
+
+volumes:
+  db_mysql_volume:
+    name: php_yii2_dev_db_mysql
+  cache_redis_volume:
+    name: php_yii2_dev_cache_redis
+  php_assets_volume:
+    name: php_yii2_dev_web_assets
