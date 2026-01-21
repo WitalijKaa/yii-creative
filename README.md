@@ -8,6 +8,12 @@ docker compose -f docker/docker-compose-dev.yaml -p wk13 up -d
 docker compose -f docker-compose-dev.yaml -p wk13 exec -u www-data php php yii migrate --interactive=0
 ```
 
+report
+
+```
+docker compose -f docker-compose-dev.yaml -p wk13 exec -u www-data php php yii paid-carts-report --subDays=7 --sendEmail=some@email.ru
+```
+
 - http://localhost/
 
 # yii-creative
