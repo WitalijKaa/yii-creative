@@ -1,5 +1,8 @@
 <?php
 
+use app\interfaces\CartProviderInterface;
+use yii\di\Container;
+
 $components = require __DIR__ . '/components.php';
 
 $config = [
@@ -12,6 +15,13 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => $components,
+    'container' => [
+        'definitions' => [
+            CartProviderInterface::class => function (Container $c) {
+                return Yii::$app->get('cartProvider');
+            },
+        ],
+    ],
     'params' => $params,
 ];
 
