@@ -34,7 +34,7 @@ class Cart extends ActiveRecord
         ];
     }
 
-    public function addToCartByProductID(int $productId, int $amount = 1): void
+    public function addToCartByProductID(int $productId, int $amount = 1): void // todo move to ShoppingInterface
     {
         if ($this->isNewRecord) {
             $this->save(false);
@@ -56,7 +56,7 @@ class Cart extends ActiveRecord
         }
     }
 
-    public function reserveToCartByProductItemID(CartItem $cartItems): void
+    public function reserveToCartByProductItemID(CartItem $cartItems): void // todo move to ShoppingInterface
     {
         $productId = (int)ProductItem::find()->select(['product_id'])->where(['id' => $cartItems->product_item_id])->scalar();
         $price = (float)Product::find()->select(['price'])->where(['id' => $productId])->scalar();
@@ -64,7 +64,6 @@ class Cart extends ActiveRecord
         $transaction = Yii::$app->db->beginTransaction(\yii\db\Transaction::SERIALIZABLE);
         try {
             $items = ProductItem::find()->where(['id' => $cartItems->product_item_id])->one();
-            // todo FOR UPDATE or SERIALIZIBLE
 
             $actualAmount = $cartItems->amount > $items->amount ? $items->amount : $cartItems->amount;
 
@@ -91,7 +90,7 @@ class Cart extends ActiveRecord
         }
     }
 
-    public function reserveCartItems(): void
+    public function reserveCartItems(): void // todo move to ShoppingInterface
     {
         if ($this->status != CartStatusEnum::potential->value) {
             return;
@@ -109,7 +108,7 @@ class Cart extends ActiveRecord
         $this->save(false);
     }
 
-    public function payCartItems(): void
+    public function payCartItems(): void // todo move to ShoppingInterface
     {
         if ($this->status != CartStatusEnum::reserved->value) {
             throw new \RuntimeException('Pay critical error');
@@ -189,11 +188,7 @@ class Cart extends ActiveRecord
     {
         $sum = 0.0;
         foreach ($this->items as $cartItem) {
-            $price = $cartItem->productItem?->product?->price;
-            if ($price === null) {
-                continue;
-            }
-            $sum += $cartItem->amount * (float) $price;
+            $sum += $cartItem->amount * (float)$cartItem->productItem?->product?->price;
         }
         return $sum;
     }
@@ -202,7 +197,7 @@ class Cart extends ActiveRecord
     {
         $sum = 0.0;
         foreach ($this->items as $cartItem) {
-            $sum += $cartItem->amount * (float) $cartItem->price;
+            $sum += $cartItem->amount * (float)$cartItem->price;
         }
         return $sum;
     }
