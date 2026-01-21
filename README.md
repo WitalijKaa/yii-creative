@@ -8,11 +8,15 @@ to demonstrate the code and architectural approach
 
 # structure
 
+is this e-shop u may put items to cart, reserve items, buy it, make report, have warning about low amount and view the managar-panel page
+
 controllers\shop\ShopController.php controllers\cart\CartController.php controllers\ManagerController.php
 
 models\Shop\Product\Product.php models\Shop\Product\ProductItem.php models\Shop\Cart\Cart.php models\Shop\Cart\CartItem.php
 
 services\CartUnregisteredService.php
+
+also interfaces\ShoppingInterface.php as a next step plan
 
 # use it with docker
 
