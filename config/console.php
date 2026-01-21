@@ -1,5 +1,6 @@
 <?php
 
+$params = require __DIR__ . '/params.php';
 $cache = require __DIR__ . '/components_cache.php';
 $db = require __DIR__ . '/db.php';
 
@@ -13,6 +14,11 @@ $components = array_merge([
         ],
     ],
     'db' => $db,
+    'mailer' => [
+        'class' => \yii\symfonymailer\Mailer::class,
+        'viewPath' => '@app/mail',
+        'useFileTransport' => true,
+    ],
 ], $cache);
 
 $config = [

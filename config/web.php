@@ -1,17 +1,28 @@
 <?php
 
+use app\bootstrap\CartEventsBootstrap;
+use app\interfaces\CartProviderInterface;
+use yii\di\Container;
+
 $components = require __DIR__ . '/components.php';
 
 $config = [
     'id' => 'basic',
     'name' => 'WK-13',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log', CartEventsBootstrap::class],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => $components,
+    'container' => [
+        'definitions' => [
+            CartProviderInterface::class => function (Container $c) {
+                return Yii::$app->get('cartProvider');
+            },
+        ],
+    ],
     'params' => $params,
 ];
 

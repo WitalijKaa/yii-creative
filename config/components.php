@@ -2,11 +2,11 @@
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
-$redis = require __DIR__ . '/redis.php';
 
 $cookieValidationKey = $params['cookieValidationKey'];
 unset($params['cookieValidationKey']);
 
+$routes = require __DIR__ . '/routes.php';
 $cache = require __DIR__ . '/components_cache.php';
 
 return array_merge([
@@ -35,11 +35,12 @@ return array_merge([
         ],
     ],
     'db' => $db,
+    'cartProvider' => [
+        'class' => \app\services\CartUnregisteredService::class,
+    ],
     'urlManager' => [
         'enablePrettyUrl' => true,
         'showScriptName' => false,
-        'rules' => [
-            'login' => 'site/login',
-        ],
+        'rules' => $routes,
     ],
 ], $cache);

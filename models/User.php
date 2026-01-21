@@ -10,13 +10,11 @@ use yii\web\IdentityInterface;
 
 class User extends ActiveRecord implements IdentityInterface
 {
+    public const string TABLE_NAME = 'user';
+    public static function tableName(): string { return self::TABLE_NAME; }
+
     public const STATUS_DELETED = 0;
     public const STATUS_ACTIVE = 10;
-
-    public static function tableName()
-    {
-        return '{{%user}}';
-    }
 
     public function behaviors()
     {
