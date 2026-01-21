@@ -5,11 +5,8 @@ namespace app\commands;
 use app\models\Shop\Cart\Cart;
 use app\models\Shop\Cart\CartStatusEnum;
 use DateTimeImmutable;
-use DateTimeInterface;
-use DateTimeZone;
 use Yii;
 use yii\console\Controller;
-use yii\console\ExitCode;
 
 class PaidCartsReportController extends Controller
 {

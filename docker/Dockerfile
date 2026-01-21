@@ -31,7 +31,7 @@ COPY docker/linux/php-${APP_ENV}.ini /usr/local/etc/php/conf.d/42-custom-php.ini
 COPY . .
 
 RUN set -eux; \
-    mkdir -p runtime web/assets; \
+    mkdir -p runtime/logs web/assets; \
     chown -R www-data:www-data /app; \
     chmod -R 0777 /app/runtime /app/web/assets; \
     chmod +x /app/yii

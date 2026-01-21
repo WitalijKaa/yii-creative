@@ -1,3 +1,19 @@
+# code demonstration Yii2
+
+this is copy of https://github.com/WitalijKaa/web-shop-armory
+
+for Yii2
+
+to demonstrate the code and architectural approach
+
+# structure
+
+controllers\shop\ShopController.php controllers\cart\CartController.php controllers\ManagerController.php
+
+models\Shop\Product\Product.php models\Shop\Product\ProductItem.php models\Shop\Cart\Cart.php models\Shop\Cart\CartItem.php
+
+services\CartUnregisteredService.php
+
 # use it with docker
 
 ```
@@ -8,13 +24,19 @@ docker compose -f docker/docker-compose-dev.yaml -p wk13 up -d
 docker compose -f docker-compose-dev.yaml -p wk13 exec -u www-data php php yii migrate --interactive=0
 ```
 
+- http://localhost/
+
 report
 
 ```
 docker compose -f docker-compose-dev.yaml -p wk13 exec -u www-data php php yii paid-carts-report --subDays=7 --sendEmail=some@email.ru
 ```
 
-- http://localhost/
+class CartReserveAction has a simple event
+
+# the End
+
+# next is just notes
 
 # yii-creative
 

@@ -8,10 +8,13 @@ services:
         APP_ENV: ${APP_ENV:-local}
     volumes:
       - ../assets:/app/assets:delegated
+      - ../bootstrap:/app/bootstrap:delegated
       - ../commands:/app/commands:delegated
       - ../config:/app/config:delegated
       - ../controllers:/app/controllers:delegated
+      - ../events:/app/events:delegated
       - ../interfaces:/app/interfaces:delegated
+      - ../listeners:/app/listeners:delegated
       - ../mail:/app/mail:delegated
       - ../migrations:/app/migrations:delegated
       - ../models:/app/models:delegated

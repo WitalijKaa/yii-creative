@@ -1,5 +1,6 @@
 <?php
 
+use app\bootstrap\CartEventsBootstrap;
 use app\interfaces\CartProviderInterface;
 use yii\di\Container;
 
@@ -9,7 +10,7 @@ $config = [
     'id' => 'basic',
     'name' => 'WK-13',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log', CartEventsBootstrap::class],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
