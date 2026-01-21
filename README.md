@@ -8,7 +8,7 @@ to demonstrate the code and architectural approach
 
 # structure
 
-is this e-shop u may put items to cart, reserve items, buy it, make report, have warning about low amount and view the managar-panel page
+is this e-shop u may put items to cart, reserve items, buy it. managers may create a report, have warning about low amount and view the manager-panel page
 
 controllers\shop\ShopController.php controllers\cart\CartController.php controllers\ManagerController.php
 
