@@ -22,11 +22,10 @@ class m260120_210505_seed_product_hardcode extends Migration
             $model->save(false);
 
             $items = new ProductItem();
-            $items->amount = 100;
+            $items->amount = ($name == 'Spear' ? 5 : 100);
             $items->product_id = $model->id;
             $items->save(false);
         }
-        ProductItem::updateAll(['amount' => 5], ['name' => 'Spear']);
     }
 
     public function safeDown()

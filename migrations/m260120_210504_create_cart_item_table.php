@@ -1,12 +1,15 @@
 <?php
 
+use app\models\Shop\Cart\Cart;
+use app\models\Shop\Cart\CartItem;
+use app\models\Shop\Product\ProductItem;
 use yii\db\Migration;
 
 class m260120_210504_create_cart_item_table extends Migration
 {
     public function safeUp()
     {
-        $this->createTable('cart_item', [
+        $this->createTable(CartItem::TABLE_NAME, [
             'id' => $this->primaryKey(),
             'cart_id' => $this->integer()->notNull(),
             'product_item_id' => $this->integer()->notNull(),
@@ -16,9 +19,9 @@ class m260120_210504_create_cart_item_table extends Migration
 
         $this->addForeignKey(
             'ix_ci_cart',
-            'cart_item',
+            CartItem::TABLE_NAME,
             'cart_id',
-            'cart',
+            Cart::TABLE_NAME,
             'id',
             'CASCADE',
             'CASCADE'
@@ -26,9 +29,9 @@ class m260120_210504_create_cart_item_table extends Migration
 
         $this->addForeignKey(
             'ix_ci_product_item',
-            'cart_item',
+            CartItem::TABLE_NAME,
             'product_item_id',
-            'product_item',
+            ProductItem::TABLE_NAME,
             'id',
             'CASCADE',
             'CASCADE'
@@ -37,9 +40,9 @@ class m260120_210504_create_cart_item_table extends Migration
 
     public function safeDown()
     {
-        $this->dropForeignKey('ix_ci_product_item', 'cart_item');
-        $this->dropForeignKey('ix_ci_cart', 'cart_item');
-        $this->dropTable('cart_item');
+        $this->dropForeignKey('ix_ci_product_item', CartItem::TABLE_NAME);
+        $this->dropForeignKey('ix_ci_cart', CartItem::TABLE_NAME);
+        $this->dropTable(CartItem::TABLE_NAME);
     }
 }
 
