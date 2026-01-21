@@ -11,9 +11,11 @@ services:
       - ../commands:/app/commands:delegated
       - ../config:/app/config:delegated
       - ../controllers:/app/controllers:delegated
+      - ../interfaces:/app/interfaces:delegated
       - ../mail:/app/mail:delegated
       - ../migrations:/app/migrations:delegated
       - ../models:/app/models:delegated
+      - ../services:/app/services:delegated
       - ../views:/app/views:delegated
       - ../web:/app/web:delegated
       - php_assets_volume:/app/web/assets
